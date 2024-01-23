@@ -1,24 +1,30 @@
+#In this SQL, I'm querying a database with multiple tables in it to quantify statistics about customer and order data. 
+
+#1. How many orders were placed in January?
 SELECT COUNT(orderid)
 FROM BIT_DB.JanSales
 WHERE length(orderid) = 6
 AND orderid <>'Order ID';
 
+#2. How many of those orders were for an iPhone?
 SELECT COUNT(orderid)
 FROM BIT_DB.JanSales
 WHERE Product='iphone'
 AND length(orderid) = 6
 AND orderid <> 'Order ID';
 
+#3. Select the customer account numbers for all the orders that were placed in February. 
 SELECT distinct Product,price
 FROM BIT_DB.JanSales
 WHERE price in (SELECT min(price) FROM BIT_DB.JanSales);
 
+#4. Which product was the cheapest one sold in January, and what was the price? 
 SELECT sum(quantity)*price as revenue
 ,product
 FROM BIT_DB.JanSales
 GROUP BY product;
 
-SELECT
+#5. What is the total revenue for each product sold in January?SELECT
 count(distinct cust.acctnum),
 avg(quantity*price)
 FROM BIT_DB.FebSales FEB
